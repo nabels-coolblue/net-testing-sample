@@ -37,16 +37,27 @@ namespace StringCalculator
             if (int.TryParse(numbers, out singleNumber))
                 return singleNumber;
 
-            int sumOfNumbers = 0;
-            List<string> delimitedNumbers = numbers.Split(',').ToList();
-            var itemContainingNewLines = delimitedNumbers.SingleOrDefault(dn => dn.Contains("\n"));
-            if (itemContainingNewLines != null)
+            List<string> delimitedNumbers;
+            if (numbers.StartsWith("//"))
             {
-                delimitedNumbers.Remove(itemContainingNewLines);
-                var items = itemContainingNewLines.Split('\n');
-                delimitedNumbers.AddRange(items);
+                var leadingNewLine = numbers.IndexOf("\n");
+                var delimiter = Convert.ToChar(numbers.Substring(2, numbers.IndexOf("\n") - 2));
+                var blockOfNumbers = numbers.Substring(leadingNewLine, numbers.Length - leadingNewLine);
+                delimitedNumbers = blockOfNumbers.Split(delimiter).ToList();
+            }
+            else
+            {
+                delimitedNumbers = numbers.Split(',').ToList();
+                var itemContainingNewLines = delimitedNumbers.SingleOrDefault(dn => dn.Contains("\n"));
+                if (itemContainingNewLines != null)
+                {
+                    delimitedNumbers.Remove(itemContainingNewLines);
+                    var items = itemContainingNewLines.Split('\n');
+                    delimitedNumbers.AddRange(items);
+                }
             }
 
+            int sumOfNumbers = 0;
             for (int i = 0; i < delimitedNumbers.Count(); i++)
             {
                 sumOfNumbers += Convert.ToInt32(delimitedNumbers[i]);
