@@ -62,5 +62,37 @@ namespace StringCalculator.Tests
 
             result.Should().Be(1 + 2);
         }
+
+
+        [TestMethod]
+        public void Add_AddingNegativeNumber_ThrowsException()
+        {
+            var sut = new StringCalculator();
+            var result = sut.Add("-2");
+
+            result.ShouldRaise<NoNegativesAllowedException>();
+        }
+
+        [TestMethod]
+        public void Add_AddingNegativeNumbers_ThrowsException()
+        {
+            var sut = new StringCalculator();
+            var result = sut.Add("-2,-3");
+
+            result.ShouldRaise<NoNegativesAllowedException>();
+        }
+
+        [TestMethod]
+        public void Add_AddingNegativeNumbersWithCustomDelimiter_ThrowsException()
+        {
+            var sut = new StringCalculator();
+            var result = sut.Add("//;\n-2;-3");
+
+            result.ShouldRaise<NoNegativesAllowedException>();
+        }
     }
+
+
+
+}
 }
