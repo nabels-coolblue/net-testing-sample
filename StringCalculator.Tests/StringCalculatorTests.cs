@@ -68,31 +68,28 @@ namespace StringCalculator.Tests
         public void Add_AddingNegativeNumber_ThrowsException()
         {
             var sut = new StringCalculator();
-            var result = sut.Add("-2");
 
-            result.ShouldRaise<NoNegativesAllowedException>();
+            Action act = () => sut.Add("-2");
+
+            act.ShouldThrow<NoNegativesAllowedException>();
         }
 
         [TestMethod]
         public void Add_AddingNegativeNumbers_ThrowsException()
         {
             var sut = new StringCalculator();
-            var result = sut.Add("-2,-3");
+            Action act = () => sut.Add("-2,-3");
 
-            result.ShouldRaise<NoNegativesAllowedException>();
+            act.ShouldThrow<NoNegativesAllowedException>();
         }
 
         [TestMethod]
         public void Add_AddingNegativeNumbersWithCustomDelimiter_ThrowsException()
         {
             var sut = new StringCalculator();
-            var result = sut.Add("//;\n-2;-3");
+            Action act = () => sut.Add("//;\n-2;-3");
 
-            result.ShouldRaise<NoNegativesAllowedException>();
+            act.ShouldThrow<NoNegativesAllowedException>();
         }
     }
-
-
-
-}
 }
