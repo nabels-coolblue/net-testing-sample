@@ -69,7 +69,11 @@ namespace StringCalculator
             int sumOfNumbers = 0;
             for (int i = 0; i < delimitedNumbers.Count(); i++)
             {
-                sumOfNumbers += Convert.ToInt32(delimitedNumbers[i]);
+                var number = Convert.ToInt32(delimitedNumbers[i]);
+                if (number < 0)
+                    throw new NoNegativesAllowedException();
+
+                sumOfNumbers += number;
                 if (i == delimitedNumbers.Count() - 1)
                     return sumOfNumbers;
             }
