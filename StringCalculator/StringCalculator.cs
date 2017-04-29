@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace StringCalculator
 {
@@ -31,11 +33,19 @@ namespace StringCalculator
                 return singleNumber;
 
             int sumOfNumbers = 0;
-            string[] delimitedNumbers = numbers.Split(',');
-            for (int i = 0; i < delimitedNumbers.Length; i++)
+            List<string> delimitedNumbers = numbers.Split(',').ToList();
+            var itemContainingNewLines = delimitedNumbers.SingleOrDefault(dn => dn.Contains("\n"));
+            if (itemContainingNewLines != null)
+            {
+                delimitedNumbers.Remove(itemContainingNewLines);
+                var items = itemContainingNewLines.Split('\n');
+                delimitedNumbers.AddRange(items);
+            }
+
+            for (int i = 0; i < delimitedNumbers.Count(); i++)
             {
                 sumOfNumbers += Convert.ToInt32(delimitedNumbers[i]);
-                if (i == delimitedNumbers.Length - 1)
+                if (i == delimitedNumbers.Count() - 1)
                     return sumOfNumbers;
             }
 
