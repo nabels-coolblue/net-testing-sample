@@ -91,5 +91,14 @@ namespace StringCalculator.Tests
 
             act.ShouldThrow<NoNegativesAllowedException>();
         }
+
+        [TestMethod]
+        public void Add_AddingNegativeNumbers_ThrowsExceptionWithNegativeValues()
+        {
+            var sut = new StringCalculator();
+            Action act = () => sut.Add("-2,-3,5,-5");
+
+            act.ShouldThrow<NoNegativesAllowedException>().Where(e => e.Data["negatives"].Equals("-2,-3,-5"));
+        }
     }
 }
