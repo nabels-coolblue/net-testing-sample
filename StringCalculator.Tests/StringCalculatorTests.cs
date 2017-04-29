@@ -53,5 +53,14 @@ namespace StringCalculator.Tests
 
             result.Should().Be(1 + 2 + 3);
         }
+
+        [TestMethod]
+        public void Add_UsingACustomDelimiter_ReturnsTheSum()
+        {
+            var sut = new StringCalculator();
+            var result = sut.Add("//;\n1;2");
+
+            result.Should().Be(1 + 2);
+        }
     }
 }
