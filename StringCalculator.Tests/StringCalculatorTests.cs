@@ -20,7 +20,9 @@ namespace StringCalculator.Tests
         public void Add_OneNumber_ReturnsTheSameNumber()
         {
             var sut = new StringCalculator();
-            var result = sut.Add("1");
+            var expected = 1;
+            var result = sut.Add(expected.ToString());
+            
 
             result.Should().Be(1);
         }
