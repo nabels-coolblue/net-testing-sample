@@ -33,14 +33,8 @@ namespace StringCalculator
     {
         public int Add(string numbers)
         {
-            if (numbers == string.Empty)
-                return 0;
+            List<string> delimitedNumbers = new List<string>();
 
-            int singleNumber;
-            if (int.TryParse(numbers, out singleNumber))
-                return singleNumber;
-
-            List<string> delimitedNumbers;
             if (numbers.StartsWith("//"))
             {
                 var leadingNewLine = numbers.IndexOf("\n");
@@ -50,13 +44,25 @@ namespace StringCalculator
             }
             else
             {
-                delimitedNumbers = numbers.Split(',').ToList();
-                var itemContainingNewLines = delimitedNumbers.SingleOrDefault(dn => dn.Contains("\n"));
-                if (itemContainingNewLines != null)
+                int singleNumber;
+                if (numbers == string.Empty)
                 {
-                    delimitedNumbers.Remove(itemContainingNewLines);
-                    var items = itemContainingNewLines.Split('\n');
-                    delimitedNumbers.AddRange(items);
+                    delimitedNumbers.Add(0.ToString());
+                }
+                else if (int.TryParse(numbers, out singleNumber))
+                {
+                    delimitedNumbers.Add(singleNumber.ToString());
+                }
+                else
+                {
+                    delimitedNumbers = numbers.Split(',').ToList();
+                    var itemContainingNewLines = delimitedNumbers.SingleOrDefault(dn => dn.Contains("\n"));
+                    if (itemContainingNewLines != null)
+                    {
+                        delimitedNumbers.Remove(itemContainingNewLines);
+                        var items = itemContainingNewLines.Split('\n');
+                        delimitedNumbers.AddRange(items);
+                    }
                 }
             }
 
