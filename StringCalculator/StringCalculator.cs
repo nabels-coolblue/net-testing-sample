@@ -66,16 +66,23 @@ namespace StringCalculator
                 }
             }
 
-            int sumOfNumbers = 0;
+            List<int> delimitedNumbersAsInts = new List<int>();
             for (int i = 0; i < delimitedNumbers.Count(); i++)
             {
                 var number = Convert.ToInt32(delimitedNumbers[i]);
-                if (number < 0)
-                    throw new NoNegativesAllowedException();
-
-                sumOfNumbers += number;
+                delimitedNumbersAsInts.Add(number);
+                
                 if (i == delimitedNumbers.Count() - 1)
-                    return sumOfNumbers;
+                {
+                    var negativeValues = delimitedNumbersAsInts.Where(n => n < 0);
+                    if (negativeValues.Any())
+                    {
+                        var exception = new NoNegativesAllowedException();
+                        exception.Data["negatives"] = string.Join(",", negativeValues);
+                        throw exception;
+                    }
+                    return delimitedNumbersAsInts.Sum();
+                }
             }
 
             return -1;
