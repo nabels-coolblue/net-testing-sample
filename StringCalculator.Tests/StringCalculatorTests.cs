@@ -35,5 +35,14 @@ namespace StringCalculator.Tests
 
             result.Should().Be(3);
         }
+
+        [TestMethod]
+        public void Add_LotsOfNumbers_ReturnsTheSum()
+        {
+            var sut = new StringCalculator();
+            var result = sut.Add("1,2,4,5,6,6,4");
+
+            result.Should().Be(1+2+4+5+6+6+4);
+        }
     }
 }

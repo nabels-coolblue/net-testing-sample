@@ -13,7 +13,7 @@ namespace StringCalculator
     // Remember to solve things as simply as possible so that you force yourself to write tests you did not think about
     // Remember to refactor after each passing test
 
-    // [ ] Allow the Add method to handle an unknown amount of numbers
+    // [X] Allow the Add method to handle an unknown amount of numbers
 
     public class StringCalculator
     {
